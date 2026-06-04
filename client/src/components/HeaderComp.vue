@@ -1,6 +1,7 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth'
 
+
 const authStore = useAuthStore()
 </script>
 
@@ -30,6 +31,9 @@ const authStore = useAuthStore()
                 </li>
                 <li class="header-list__item">
                     <a class="header-list__link" href="#main">Главная</a>
+                </li>
+                <li class="header-list__item">
+                    <a v-if="authStore.isAdmin" class="header-list__link" href="#main">Добавить</a>
                 </li>
             </ul>
         </nav>

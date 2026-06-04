@@ -1,4 +1,7 @@
 <script setup>
+import { useAuthStore } from '@/stores/auth'
+const authStore = useAuthStore()
+
 defineProps({
     image: String,
     image2x: String,
@@ -24,6 +27,10 @@ const getImage = (filename) => {
         <div class="card-content">
             <h2 class="card-content__title">{{ title }}</h2>
             <p class="card-content__descr">{{ description }}</p>
+            <div class="card-btns" v-if="authStore.isAdmin">
+                <button v-if="authStore.isAdmin" class="card-content__delete">Удалить</button>
+                <button v-if="authStore.isAdmin" class="card-content__update">Обновить</button>
+            </div>
         </div>
         <slot></slot>
     </RouterLink>
@@ -88,5 +95,30 @@ const getImage = (filename) => {
 
 .card:hover .card__hover {
     opacity: 1;
+}
+
+.card-btns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-content__delete {
+    border: none;
+    padding: 16px 29px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #F9F6F0;
+    background-color: #536C4F;
+}
+
+.card-content__update {
+    border: none;
+    padding: 16px 29px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #F9F6F0;
+    background-color: #536C4F;
 }
 </style>
