@@ -37,7 +37,7 @@ const authStore = useAuthStore()
             Войти
         </RouterLink>
         <RouterLink v-else to="/account" class="header__login">
-            {{ authStore.isAdmin ? 'Admin' : authStore.user.email }}
+            {{ authStore.isAdmin ? 'Admin' : authStore.user?.email }}
         </RouterLink>
     </header>
 </template>
