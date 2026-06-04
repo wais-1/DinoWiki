@@ -33,7 +33,7 @@ const goBack = () => router.push('/')
                         <div class="personal__btns">
                             <button class="personal__btn">
                                 Трицератопс (Triceratops)
-                                <svg width="28" height="8" viewBox="0 0 28 8" fill="none"
+                                <svg class="personal__icon" width="28" height="8" viewBox="0 0 28 8" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M27.3536 4.03554C27.5488 3.84028 27.5488 3.52369 27.3536 3.32843L24.1716 0.14645C23.9763 -0.0488122 23.6597 -0.0488122 23.4645 0.14645C23.2692 0.341712 23.2692 0.658295 23.4645 0.853557L26.2929 3.68198L23.4645 6.51041C23.2692 6.70567 23.2692 7.02226 23.4645 7.21752C23.6597 7.41278 23.9763 7.41278 24.1716 7.21752L27.3536 4.03554ZM0 3.68198V4.18198H27V3.68198V3.18198H0V3.68198Z"
@@ -42,7 +42,7 @@ const goBack = () => router.push('/')
                             </button>
                             <button class="personal__btn">
                                 Мозозавр (Mosasauridae)
-                                <svg width="28" height="8" viewBox="0 0 28 8" fill="none"
+                                <svg class="personal__icon" width="28" height="8" viewBox="0 0 28 8" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M27.3536 4.03554C27.5488 3.84028 27.5488 3.52369 27.3536 3.32843L24.1716 0.14645C23.9763 -0.0488122 23.6597 -0.0488122 23.4645 0.14645C23.2692 0.341712 23.2692 0.658295 23.4645 0.853557L26.2929 3.68198L23.4645 6.51041C23.2692 6.70567 23.2692 7.02226 23.4645 7.21752C23.6597 7.41278 23.9763 7.41278 24.1716 7.21752L27.3536 4.03554ZM0 3.68198V4.18198H27V3.68198V3.18198H0V3.68198Z"
@@ -51,7 +51,7 @@ const goBack = () => router.push('/')
                             </button>
                             <button class="personal__btn">
                                 Велоцираптор (Velociraptor)
-                                <svg width="28" height="8" viewBox="0 0 28 8" fill="none"
+                                <svg class="personal__icon" width="28" height="8" viewBox="0 0 28 8" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M27.3536 4.03554C27.5488 3.84028 27.5488 3.52369 27.3536 3.32843L24.1716 0.14645C23.9763 -0.0488122 23.6597 -0.0488122 23.4645 0.14645C23.2692 0.341712 23.2692 0.658295 23.4645 0.853557L26.2929 3.68198L23.4645 6.51041C23.2692 6.70567 23.2692 7.02226 23.4645 7.21752C23.6597 7.41278 23.9763 7.41278 24.1716 7.21752L27.3536 4.03554ZM0 3.68198V4.18198H27V3.68198V3.18198H0V3.68198Z"
@@ -135,7 +135,7 @@ const goBack = () => router.push('/')
 }
 
 .account-main__btn:hover {
-    transform: translateY(-10px);
+    transform: translateY(-7px);
 }
 
 .account-avatar__btn {
@@ -218,5 +218,14 @@ const goBack = () => router.push('/')
     top: 150px;
     left: 82px;
     cursor: pointer;
+}
+
+.personal__icon {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+    transition: clip-path 0.5s ease;
+}
+
+.personal__icon:hover {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
 </style>
