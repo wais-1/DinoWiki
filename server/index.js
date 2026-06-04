@@ -4,9 +4,7 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(cors({ 
-  origin: ['http://localhost:5173', 'https://wais-1.github.io'] 
-}));
+app.use(cors());
 app.use(express.json());
 
 app.use('/api/users', require('./routes/users'));
