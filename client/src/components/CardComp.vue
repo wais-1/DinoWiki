@@ -27,10 +27,10 @@ const getImage = (filename) => {
         <div class="card-content">
             <h2 class="card-content__title">{{ title }}</h2>
             <p class="card-content__descr">{{ description }}</p>
-            <div class="card-btns" v-if="authStore.isAdmin">
+            <!-- <div class="card-btns" v-if="authStore.isAdmin">
                 <button v-if="authStore.isAdmin" class="card-content__delete">Удалить</button>
                 <button v-if="authStore.isAdmin" class="card-content__update">Обновить</button>
-            </div>
+            </div> -->
         </div>
         <slot></slot>
     </RouterLink>
