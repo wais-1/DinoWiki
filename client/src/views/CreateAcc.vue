@@ -1,28 +1,19 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref, computed } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const goBack = () => router.push('/login')
 
 const userEmail = ref('')
 const userPassword = ref('')
+const repeatPassword = ref('')
 
 const emailErr = ref(false)
 const passwordErr = ref(false)
-const repeatPassword = ref('')
-
 const isSubmitted = ref(false)
-
-const loginBtn = () => {
-    emailErr.value = !userEmail.value
-    passwordErr.value = !userPassword.value
-    isSubmitted.value = true
-
-    if (emailErr.value || passwordErr.value) return
-    if (!isPasswordValid.value) return
-    if (repeatPassword.value != userPassword.value) return
-}
 
 const isPasswordValid = computed(() => userPassword.value.length >= 8)
 
@@ -31,8 +22,25 @@ const isPasswordErr = computed(() => {
 })
 
 const isMatchErr = computed(() => {
-    return isSubmitted.value && (repeatPassword.value != userPassword.value)
+    return isSubmitted.value && (repeatPassword.value !== userPassword.value)
 })
+
+const loginBtn = async () => {
+    emailErr.value = !userEmail.value
+    passwordErr.value = !userPassword.value
+    isSubmitted.value = true
+
+    if (emailErr.value || passwordErr.value) return
+    if (!isPasswordValid.value) return
+    if (repeatPassword.value !== userPassword.value) return
+
+    try {
+        await authStore.register(userEmail.value, userPassword.value)
+        router.push('/login')
+    } catch (err) {
+        console.error(err)
+    }
+}
 </script>
 
 <template>
@@ -41,7 +49,7 @@ const isMatchErr = computed(() => {
             <form action="#" class="form">
                 <h2 class="form__title">Создать аккаунт</h2>
                 <div :class="['custom-input', { error: emailErr }]">
-                    <input :ref="userEmail" type="email" class="custom-input__field" id="user-email" placeholder="Введите вашу почту" v-model="userEmail">
+                    <input type="email" class="custom-input__field" id="user-email" placeholder="Введите вашу почту" v-model="userEmail">
                     <span class="error-text">Введите почту</span>
                     <span class="text-login">Неверная почта и пароль</span>
                     <label for="user-email" class="custom-input__label">email</label>
