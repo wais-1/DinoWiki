@@ -1,0 +1,74 @@
+/* geologica - variable font */
+@font-face {
+  font-display: swap;
+  font-family: 'Geologica';
+  font-style: normal;
+  font-weight: 100 900;
+  src: url('/fonts/Geologica.ttf') format('truetype');
+}
+
+/* days-one-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Days One';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/DaysOne-Regular.ttf') format('truetype');
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Geologica", "Arial", sans-serif;
+  background-color: #F9F6F0;
+  height: 100%;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+    color: #D95A1C;
+    font-size: 18px;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
+}
+
+.container {
+  padding: 0 80px;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  min-height: 100vh;
+}
+
+.shifted {
+  transform: translateX(-321px);
+}
+
+.shifted .container {
+  padding: 0;
+}
