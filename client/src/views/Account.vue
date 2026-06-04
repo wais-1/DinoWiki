@@ -225,7 +225,7 @@ const goBack = () => router.push('/')
     transition: clip-path 0.5s ease;
 }
 
-.personal__icon:hover {
+.personal__btn:hover .personal__icon {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 }
 </style>
