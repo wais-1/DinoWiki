@@ -26,5 +26,4 @@ const scrollToNext = () => {
   <Banner @scroll-click="scrollToNext"></Banner>
   <Intro ref="intro"></Intro>
   <MainCards></MainCards>
-  <Account></Account>
 </template>

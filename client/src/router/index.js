@@ -6,6 +6,8 @@ import CreateAcc from '@/views/CreateAcc.vue'
 import ForgotPassword from '@/views/ForgotPassword.vue'
 import Account from '@/views/Account.vue'
 import Admin from '@/views/Admin.vue'
+import AddCard from '@/views/AddCard.vue'
+import AddPage from '@/views/AddPage.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
@@ -17,6 +19,8 @@ const router = createRouter({
     { path: '/createAccount', component: CreateAcc },
     { path: '/forgotPassword', component: ForgotPassword },
     { path: '/account', component: Account },
+    { path: '/addCard', component: AddCard },
+    { path: '/addPage', component: AddPage },
     { 
       path: '/admin', 
       component: Admin,

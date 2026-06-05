@@ -33,7 +33,10 @@ const authStore = useAuthStore()
                     <a class="header-list__link" href="#main">Главная</a>
                 </li>
                 <li class="header-list__item">
-                    <a v-if="authStore.isAdmin" class="header-list__link" href="#main">Добавить</a>
+                    <RouterLink v-if="authStore.isAdmin" class="header-list__link" to="/addCard">Добавить карточку</RouterLink>
+                </li>
+                <li class="header-list__item">
+                    <RouterLink v-if="authStore.isAdmin" class="header-list__link" to="/addPage">Добавить страницу</RouterLink>
                 </li>
             </ul>
         </nav>

@@ -135,7 +135,7 @@ const goBack = () => router.push('/')
 }
 
 .account-main__btn:hover {
-    transform: translateY(-7px);
+    transform: scale(1.1);
 }
 
 .account-avatar__btn {
@@ -181,6 +181,11 @@ const goBack = () => router.push('/')
     gap: 13px;
     font-size: 15px;
     color: #D95A1C;
+    transition: opacity 0.5s ease;
+}
+
+.personal__btn:hover {
+    opacity: 0.7;
 }
 
 .account-avatar {
