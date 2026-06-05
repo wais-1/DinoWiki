@@ -24,4 +24,39 @@ router.get('/:id', async (req, res) => {
   }
 })
 
+router.post('/', async (req, res) => {
+    const {
+        dino_name,
+        mini_description,
+        dino_page_id
+    } = req.body
+
+    try {
+        const [result] = await pool.query(
+            `INSERT INTO dino_card
+            (
+                dino_page_id,
+                favorite_status,
+                mini_description,
+                dino_name
+            )
+            VALUES (?, ?, ?, ?)`,
+            [
+                dino_page_id,
+                'none',
+                mini_description,
+                dino_name
+            ]
+        )
+
+        res.json({
+            id: result.insertId
+        })
+    } catch (err) {
+        res.status(500).json({
+            error: err.message
+        })
+    }
+})
+
 module.exports = router;
