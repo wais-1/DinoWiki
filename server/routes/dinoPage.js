@@ -4,24 +4,25 @@ const pool = require('../db')
 
 router.post('/', async (req, res) => {
   const {
-    name,
-    length,
-    habitat_period,
-    family,
-    appearance,
-    lifestyle,
-    height,
-    weight,
-    nutrition,
-    dino_type,
-    dino_location,
-    dino_period
-  } = req.body
+  name,
+  length,
+  habitat_period,
+  family,
+  appearance,
+  lifestyle,
+  height,
+  weight,
+  nutrition,
+  dino_type,
+  dino_location,
+  dino_period,
+  food_type
+} = req.body
 
   try {
     const [result] = await pool.query(
       `INSERT INTO dino_page
-      (
+        (
         name,
         length,
         habitat_period,
@@ -33,9 +34,10 @@ router.post('/', async (req, res) => {
         nutrition,
         dino_type,
         dino_location,
-        dino_peripd
-      )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        dino_period,
+        food_type
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         name,
         length,
@@ -48,7 +50,8 @@ router.post('/', async (req, res) => {
         nutrition,
         dino_type,
         dino_location,
-        dino_period
+        dino_period,
+        food_type
       ]
     )
 
