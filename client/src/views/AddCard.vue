@@ -1,25 +1,41 @@
 <script setup>
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import api from '@/api'
 
 const router = useRouter()
 const goBack = () => router.push('/')
+
+const dino_name = ref('')
+const mini_description = ref('')
+const dino_page_id = ref('')
+
+const addCard = async () => {
+    await api.post('/dinoCard', {
+        dino_name: dino_name.value,
+        mini_description: mini_description.value,
+        dino_page_id: dino_page_id.value
+    })
+
+    alert('success')
+}
 </script>
 
 <template>
     <section class="login-form">
         <div class="login-form__wrapper">
-            <form action="#" class="form">
+            <form @submit.prevent="addCard" action="#" class="form">
                 <h2 class="form__title">Добавление новой карточки</h2>
                 <div :class="['custom-input']">
-                    <input type="text" class="custom-input__field" placeholder="Имя динозавра">
+                    <input v-model="dino_name" type="text" class="custom-input__field" placeholder="Имя динозавра">
                     <label for="user-email" class="custom-input__label">Название</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="text" class="custom-input__field" placeholder="Описание динозавра">
+                    <input  v-model="mini_description"type="text" class="custom-input__field" placeholder="Описание динозавра">
                     <label for="user-email" class="custom-input__label">Описание</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="text" class="custom-input__field" placeholder="id страницы динозавра">
+                    <input v-model="dino_page_id" type="number" class="custom-input__field" placeholder="id страницы динозавра">
                     <label for="user-email" class="custom-input__label">id страницы</label>
                 </div>
                 <div :class="['custom-input']">

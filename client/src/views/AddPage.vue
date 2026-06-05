@@ -1,49 +1,69 @@
 <script setup>
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import api from '@/api'
 
 const router = useRouter()
 const goBack = () => router.push('/')
+
+const form = ref({
+    name: '',
+    habitat_period: '',
+    nutrition: '',
+    family: '',
+    length: '',
+    height: '',
+    weight: '',
+    appearance: '',
+    lifestyle: ''
+})
+
+const addPage = async () => {
+    const { data } = await api.post('/dinoPage', form.value)
+
+    alert(`success. ID = ${data.id}`)
+}
 </script>
 
 <template>
     <section class="login-form">
         <div class="login-form__wrapper">
-            <form action="#" class="form">
+            <form @submit.prevent="addPage" action="#" class="form">
                 <h2 class="form__title">Добавление новой страницы</h2>
                 <div :class="['custom-input']">
-                    <input type="text" class="custom-input__field" placeholder="Имя динозавра">
+                    <input v-model="form.name" type="text" class="custom-input__field" placeholder="Имя динозавра">
                     <label class="custom-input__label">Название</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="text" class="custom-input__field" placeholder="Период обитания динозавра">
+                    <input v-model="form.habitat_period" type="text" class="custom-input__field" placeholder="Период обитания динозавра">
                     <label class="custom-input__label">Период обитания</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="text" class="custom-input__field" placeholder="Питание динозавра">
+                    <input v-model="form.nutrition" type="text" class="custom-input__field" placeholder="Питание динозавра">
                     <label class="custom-input__label">Питание</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="text" class="custom-input__field" placeholder="Семейство динозавра">
+                    <input v-model="form.family" type="text" class="custom-input__field" placeholder="Семейство динозавра">
                     <label class="custom-input__label">Семейство</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="text" class="custom-input__field" placeholder="Длина динозавра">
+                    <input v-model="form.length" type="text" class="custom-input__field" placeholder="Длина динозавра">
                     <label class="custom-input__label">Длина</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="text" class="custom-input__field" placeholder="Высота динозавра">
+                    <input v-model="form.height" type="text" class="custom-input__field" placeholder="Высота динозавра">
                     <label class="custom-input__label">Высота</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="text" class="custom-input__field" placeholder="Вес динозавра">
+                    <input v-model="form.weight" type="text" class="custom-input__field" placeholder="Вес динозавра">
                     <label class="custom-input__label">Вес</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="text" class="custom-input__field" placeholder="Внешность динозавра">
+                    <input v-model="form.appearance" type="text" class="custom-input__field" placeholder="Внешность динозавра">
                     <label class="custom-input__label">Внешность</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="text" class="custom-input__field" placeholder="Образ жизни динозавра">
+                    <input v-model="form.lifestyle" type="text" class="custom-input__field" placeholder="Образ жизни динозавра">
                     <label class="custom-input__label">Образ жизни</label>
                 </div>
                 <div :class="['custom-input']">

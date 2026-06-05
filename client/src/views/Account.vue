@@ -91,7 +91,7 @@ const goBack = () => router.push('/')
                         <img src="../images/img-avatar.png" srcset="../images/img-avatar@2x.png 2x"
                             alt="картинка аватвра" class="account-avatar__img">
                     </picture>
-                    <buuton class="account-avatar__btn">установить фото</buuton>
+                    <button class="account-avatar__btn">установить фото</button>
                 </div>
             </div>
         </div>
