@@ -120,7 +120,7 @@ const addPage = async () => {
     padding: 61px 90px;
     border-radius: 40px;
     margin: 0 auto;
-    width: 900px;
+    width: 100%;
 }
 
 .form {
