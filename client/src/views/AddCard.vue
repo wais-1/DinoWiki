@@ -18,6 +18,7 @@ const addCard = async () => {
     })
 
     alert('success')
+    console.log('dinoPageId =', props.dinoPageId)
 }
 </script>
 
