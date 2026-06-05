@@ -15,7 +15,12 @@ const form = ref({
     height: '',
     weight: '',
     appearance: '',
-    lifestyle: ''
+    lifestyle: '',
+
+    dino_type: 'predator',
+    dino_location: 'ground',
+    dino_period: 'triassic',
+    food_type: 'carnivores'
 })
 
 const addPage = async () => {
@@ -74,6 +79,29 @@ const addPage = async () => {
                     <input type="file" class="custom-input__field" placeholder="Картинка динозавра">
                     <label for="user-email" class="custom-input__label">Картинка 2x</label>
                 </div>
+                <select v-model="form.dino_type" name="select_type" id="seletct-dino-type" class="custom-select">
+                    <option value="predator">predator</option>
+                    <option value="herbivorous">herbivorous</option>
+                    <option value="aquatic">aquatic</option>
+                    <option value="flying">flying</option>
+                </select>
+                <select v-model="form.dino_location" name="select_location" id="seletct-dino-location" class="custom-select">
+                    <option value="ground">ground</option>
+                    <option value="water">water</option>
+                    <option value="fly">fly</option>
+                </select>
+                <select v-model="form.dino_period" name="select_period" id="seletct-dino-period" class="custom-select">
+                    <option value="triassic">triassic</option>
+                    <option value="jurassic">jurassic</option>
+                    <option value="chalky">chalky</option>
+                </select>
+                <select v-model="form.food_type" name="select_food" id="seletct-dino-food" class="custom-select">
+                    <option value="carnivores">carnivores</option>
+                    <option value="herbivores">herbivores</option>
+                    <option value="omnivores">omnivores</option>
+                    <option value="piscivores">piscivores</option>
+                    <option value="insectivores">insectivores</option>
+                </select>
                 <button class="form__btn">Добавить</button>
             </form>
         </div>
