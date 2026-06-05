@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
         nutrition,
         dino_type,
         dino_location,
-        dino_period,
+        dino_peripd,
         food_type
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
