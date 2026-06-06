@@ -6,7 +6,7 @@
     <section class="login-form">
         <div class="login-form__wrapper">
             <form @submit.prevent="addCard" action="#" class="form">
-                <h2 class="form__title">Добавление новой карточки</h2>
+                <h2 class="form__title">Обновление карточки</h2>
                 <div :class="['custom-input']">
                     <input v-model="dino_name" type="text" class="custom-input__field" placeholder="Имя динозавра">
                     <label for="user-email" class="custom-input__label">Название</label>
