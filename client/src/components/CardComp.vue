@@ -4,7 +4,7 @@ import { ref } from 'vue'
 const authStore = useAuthStore()
 
 
-defineProps({
+const props = defineProps({
     id: Number,
     image: String,
     image2x: String,
