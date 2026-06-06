@@ -49,8 +49,8 @@ router.post(
           dino_location,
           dino_peripd,
           dino_food,
-          image,
-          image_2x
+          dino_page_img,
+          dino_page_img_2x
         )
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
