@@ -14,7 +14,13 @@ defineProps({
 const getImage = (filename) => {
     if (!filename) return ''
 
-    return `https://dinowiki-production.up.railway.app/uploads/${filename}`
+    // загруженные пользователем картинки
+    if (filename.includes('-img-card-')) {
+        return `https://dinowiki-production.up.railway.app/uploads/${filename}`
+    }
+
+    // картинки проекта из src/images
+    return new URL(`../images/${filename}`, import.meta.url).href
 }
 
 const btnLiked = (event) => {
