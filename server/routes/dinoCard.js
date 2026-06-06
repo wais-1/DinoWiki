@@ -10,25 +10,32 @@ router.get('/', async (req, res) => {
     const [rows] = await pool.query('SELECT * FROM dino_card')
     res.json(rows)
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    res.status(500).json({
+      error: err.message
+    })
   }
 })
 
-// Получить страницу динозавра
+// Получить карточку по id
 router.get('/:id', async (req, res) => {
   try {
     const [rows] = await pool.query(
-      'SELECT * FROM dino_page WHERE id = ?',
+      'SELECT * FROM dino_card WHERE id = ?',
       [req.params.id]
     )
 
     if (!rows.length) {
-      return res.status(404).json({ error: 'Не найден' })
+      return res.status(404).json({
+        error: 'Карточка не найдена'
+      })
     }
 
     res.json(rows[0])
+
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    res.status(500).json({
+      error: err.message
+    })
   }
 })
 
@@ -100,5 +107,113 @@ router.post(
     }
   }
 )
+
+// Обновить карточку
+router.put(
+  '/:id',
+  upload.fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'image2x', maxCount: 1 }
+  ]),
+  async (req, res) => {
+    try {
+      const { id } = req.params
+
+      const {
+        dino_name,
+        mini_description,
+        dino_page_id,
+        favorite_status
+      } = req.body
+
+      const [current] = await pool.query(
+        'SELECT * FROM dino_card WHERE id = ?',
+        [id]
+      )
+
+      if (!current.length) {
+        return res.status(404).json({
+          error: 'Карточка не найдена'
+        })
+      }
+
+      let image = current[0].dino_card_img
+      let image2x = current[0].dino_card_img_2x
+
+      if (req.files?.image?.[0]) {
+        const result = await cloudinary.uploader.upload(
+          `data:${req.files.image[0].mimetype};base64,${req.files.image[0].buffer.toString('base64')}`
+        )
+
+        image = result.secure_url
+      }
+
+      if (req.files?.image2x?.[0]) {
+        const result = await cloudinary.uploader.upload(
+          `data:${req.files.image2x[0].mimetype};base64,${req.files.image2x[0].buffer.toString('base64')}`
+        )
+
+        image2x = result.secure_url
+      }
+
+      await pool.query(
+        `UPDATE dino_card
+         SET
+           dino_name = ?,
+           mini_description = ?,
+           dino_page_id = ?,
+           favorite_status = ?,
+           dino_card_img = ?,
+           dino_card_img_2x = ?
+         WHERE id = ?`,
+        [
+          dino_name,
+          mini_description,
+          dino_page_id,
+          favorite_status || current[0].favorite_status,
+          image,
+          image2x,
+          id
+        ]
+      )
+
+      res.json({
+        message: 'Карточка обновлена'
+      })
+
+    } catch (err) {
+      console.error(err)
+
+      res.status(500).json({
+        error: err.message
+      })
+    }
+  }
+)
+
+// Удалить карточку
+router.delete('/:id', async (req, res) => {
+  try {
+    const [result] = await pool.query(
+      'DELETE FROM dino_card WHERE id = ?',
+      [req.params.id]
+    )
+
+    if (!result.affectedRows) {
+      return res.status(404).json({
+        error: 'Карточка не найдена'
+      })
+    }
+
+    res.json({
+      message: 'Карточка удалена'
+    })
+
+  } catch (err) {
+    res.status(500).json({
+      error: err.message
+    })
+  }
+})
 
 module.exports = router
