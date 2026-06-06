@@ -80,7 +80,7 @@ const btnLiked = (event) => {
                 </button>
         <div class="card-btns" v-if="authStore.isAdmin">
             <button v-if="authStore.isAdmin" class="card-content__delete">Удалить</button>
-            <button v-if="authStore.isAdmin" class="card-content__update">Обновить</button>
+            <RouterLink to="/updateCard" v-if="authStore.isAdmin" class="card-content__update">Обновить</RouterLink>
         </div>
     </div>
 </template>
