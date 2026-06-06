@@ -39,6 +39,8 @@ router.post(
     { name: 'image2x', maxCount: 1 }
   ]),
   async (req, res) => {
+    console.log('FILES:', req.files)
+    console.log('BODY:', req.body)
     try {
       const {
         dino_name,
