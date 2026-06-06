@@ -10,6 +10,13 @@ const goBack = () => router.push('/')
 
 const getImage = (filename) => {
     if (!filename) return ''
+
+    // загруженные пользователем картинки
+    if (filename.includes('-img-card-')) {
+        return `https://dinowiki-production.up.railway.app/uploads/${filename}`
+    }
+
+    // картинки проекта из src/images
     return new URL(`../images/${filename}`, import.meta.url).href
 }
 
@@ -177,5 +184,21 @@ watch(() => route.params.id, (id) => loadDino(id))
 
 .dino-page__back--herbivorous {
     background-color: #7D8868;
+}
+
+.dino-page__title--aquatic {
+    color: #1B4E65;
+}
+
+.page-wrapper__title--aquatic {
+    color: #357997;
+}
+
+.data-wrapper--aquatic {
+    background-color: #357997;
+}
+
+.dino-page__back--aquatic {
+    background-color: #357997;
 }
 </style>

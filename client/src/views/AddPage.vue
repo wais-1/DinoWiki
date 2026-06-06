@@ -24,10 +24,48 @@ const form = ref({
     food_type: 'carnivores'
 })
 
+const image = ref(null)
+const image2x = ref(null)
+
+const onImageChange = (e) => {
+  image.value = e.target.files[0]
+}
+
+const onImage2xChange = (e) => {
+  image2x.value = e.target.files[0]
+}
+
 const addPage = async () => {
-    const { data } = await api.post('/dinoPage', form.value)
+  try {
+    const formData = new FormData()
+
+    Object.entries(form.value).forEach(([key, value]) => {
+      formData.append(key, value)
+    })
+
+    if (image.value) {
+      formData.append('image', image.value)
+    }
+
+    if (image2x.value) {
+      formData.append('image2x', image2x.value)
+    }
+
+    const { data } = await api.post(
+      '/dinoPage',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+    )
 
     alert(`success. ID = ${data.id}`)
+  } catch (err) {
+    console.error(err)
+    alert('Ошибка при создании страницы')
+  }
 }
 </script>
 
@@ -73,11 +111,11 @@ const addPage = async () => {
                     <label class="custom-input__label">Образ жизни</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="file" class="custom-input__field" placeholder="Картинка динозавра">
+                    <input @change="onImageChange" type="file" class="custom-input__field" placeholder="Картинка динозавра">
                     <label for="user-email" class="custom-input__label">Картинка</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="file" class="custom-input__field" placeholder="Картинка динозавра">
+                    <input @change="onImage2xChange" type="file" class="custom-input__field" placeholder="Картинка динозавра">
                     <label for="user-email" class="custom-input__label">Картинка 2x</label>
                 </div>
                 <select v-model="form.dino_type" name="select_type" id="seletct-dino-type" class="custom-select">
