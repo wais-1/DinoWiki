@@ -72,8 +72,8 @@ watch(() => route.params.id, (id) => loadDino(id))
                         <span class="page-wrapper__text">{{ dino.lifestyle }}</span>
                     </div>
                 </div>
-                <img v-if="dino.dino_page_img" :src="getImage(dino.dino_page_img)"
-                    :srcset="`${getImage(dino.dino_page_img_2x)} 2x`" class="dino-page__img" alt="картинка динозавра">
+                <img v-if="dino.dino_page_img" :src="dino.dino_page_img" :srcset="`${dino.dino_page_img_2x} 2x`"
+                    class="dino-page__img" alt="картинка динозавра">
             </div>
             <button :class="['dino-page__back', `dino-page__back--${dino.dino_type}`]" @click="goBack">назад</button>
         </div>
