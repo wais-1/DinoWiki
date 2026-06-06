@@ -13,7 +13,8 @@ defineProps({
 
 const getImage = (filename) => {
     if (!filename) return ''
-    return new URL(`../images/${filename}`, import.meta.url).href
+
+    return `https://dinowiki-production.up.railway.app/uploads/${filename}`
 }
 
 const btnLiked = (event) => {
