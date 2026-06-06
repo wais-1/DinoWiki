@@ -18,48 +18,50 @@ const image2x = ref(null)
 const goBack = () => router.push('/')
 
 const onImageChange = (e) => {
-  image.value = e.target.files[0]
+    image.value = e.target.files[0]
 }
 
 const onImage2xChange = (e) => {
-  image2x.value = e.target.files[0]
+    image2x.value = e.target.files[0]
 }
 
 const loadCard = async () => {
-  const { data } = await api.get(`/dinoCard/${id}`)
+    const { data } = await api.get(`/dinoCard/${id}`)
 
-  dino_name.value = data.dino_name
-  mini_description.value = data.mini_description
-  dino_page_id.value = data.dino_page_id
+    dino_name.value = data.dino_name
+    mini_description.value = data.mini_description
+    dino_page_id.value = data.dino_page_id
 }
 
 onMounted(loadCard)
 
 const updateCard = async () => {
-  try {
-    const formData = new FormData()
+    try {
+        const formData = new FormData()
 
-    formData.append('dino_name', dino_name.value)
-    formData.append('mini_description', mini_description.value)
-    formData.append('dino_page_id', dino_page_id.value)
+        formData.append('dino_name', dino_name.value)
+        formData.append('mini_description', mini_description.value)
+        formData.append('dino_page_id', dino_page_id.value)
 
-    if (image.value) {
-      formData.append('image', image.value)
+        if (image.value) {
+            formData.append('image', image.value)
+        }
+
+        if (image2x.value) {
+            formData.append('image2x', image2x.value)
+        }
+
+        await api.put(`/dinoCard/${id}`, formData)
+
+        alert('Карточка обновлена')
+        router.push('/')
+
+    } catch (err) {
+        console.error(err)
+        console.log(err.response?.data)
+
+        alert(err.response?.data?.error || 'Ошибка обновления')
     }
-
-    if (image2x.value) {
-      formData.append('image2x', image2x.value)
-    }
-
-    await api.put(`/dinoCard/${id}`, formData)
-
-    alert('Карточка обновлена')
-    router.push('/')
-
-  } catch (err) {
-    console.error(err)
-    alert('Ошибка обновления')
-  }
 }
 </script>
 
