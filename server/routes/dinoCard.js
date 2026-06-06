@@ -1,35 +1,36 @@
-const express = require('express');
-const router = express.Router();
-const pool = require('../db');
-const upload = require('../middleware/upload');
+const express = require('express')
+const router = express.Router()
+const pool = require('../db')
+const upload = require('../middleware/upload')
+const cloudinary = require('../config/cloudinary')
 
 // Получить все карточки
 router.get('/', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM dino_card');
-    res.json(rows);
+    const [rows] = await pool.query('SELECT * FROM dino_card')
+    res.json(rows)
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message })
   }
-});
+})
 
-// Получить страницу динозавра по id
+// Получить страницу динозавра
 router.get('/:id', async (req, res) => {
   try {
     const [rows] = await pool.query(
       'SELECT * FROM dino_page WHERE id = ?',
       [req.params.id]
-    );
+    )
 
     if (!rows.length) {
-      return res.status(404).json({ error: 'Не найден' });
+      return res.status(404).json({ error: 'Не найден' })
     }
 
-    res.json(rows[0]);
+    res.json(rows[0])
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message })
   }
-});
+})
 
 // Создать карточку
 router.post(
@@ -39,20 +40,31 @@ router.post(
     { name: 'image2x', maxCount: 1 }
   ]),
   async (req, res) => {
-    console.log('FILES:', req.files)
-    console.log('BODY:', req.body)
     try {
       const {
         dino_name,
         mini_description,
         dino_page_id
-      } = req.body;
+      } = req.body
 
-      const image =
-        req.files?.image?.[0]?.filename || null;
+      let image = null
+      let image2x = null
 
-      const image2x =
-        req.files?.image2x?.[0]?.filename || null;
+      if (req.files?.image?.[0]) {
+        const result = await cloudinary.uploader.upload(
+          `data:${req.files.image[0].mimetype};base64,${req.files.image[0].buffer.toString('base64')}`
+        )
+
+        image = result.secure_url
+      }
+
+      if (req.files?.image2x?.[0]) {
+        const result = await cloudinary.uploader.upload(
+          `data:${req.files.image2x[0].mimetype};base64,${req.files.image2x[0].buffer.toString('base64')}`
+        )
+
+        image2x = result.secure_url
+      }
 
       const [result] = await pool.query(
         `INSERT INTO dino_card
@@ -73,20 +85,20 @@ router.post(
           image,
           image2x
         ]
-      );
+      )
 
       res.json({
         id: result.insertId
-      });
+      })
 
     } catch (err) {
-      console.error(err);
+      console.error(err)
 
       res.status(500).json({
         error: err.message
-      });
+      })
     }
   }
-);
+)
 
-module.exports = router;
+module.exports = router
