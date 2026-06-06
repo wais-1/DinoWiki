@@ -1,30 +1,95 @@
 <script setup>
+import { useRouter, useRoute } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import api from '@/api'
 
+const router = useRouter()
+const route = useRoute()
+
+const id = route.params.id
+
+const dino_name = ref('')
+const mini_description = ref('')
+const dino_page_id = ref('')
+
+const image = ref(null)
+const image2x = ref(null)
+
+const goBack = () => router.push('/')
+
+const onImageChange = (e) => {
+  image.value = e.target.files[0]
+}
+
+const onImage2xChange = (e) => {
+  image2x.value = e.target.files[0]
+}
+
+const loadCard = async () => {
+  const { data } = await api.get(`/dinoCard/${id}`)
+
+  dino_name.value = data.dino_name
+  mini_description.value = data.mini_description
+  dino_page_id.value = data.dino_page_id
+}
+
+onMounted(loadCard)
+
+const updateCard = async () => {
+  try {
+    const formData = new FormData()
+
+    formData.append('dino_name', dino_name.value)
+    formData.append('mini_description', mini_description.value)
+    formData.append('dino_page_id', dino_page_id.value)
+
+    if (image.value) {
+      formData.append('image', image.value)
+    }
+
+    if (image2x.value) {
+      formData.append('image2x', image2x.value)
+    }
+
+    await api.put(`/dinoCard/${id}`, formData)
+
+    alert('Карточка обновлена')
+    router.push('/')
+
+  } catch (err) {
+    console.error(err)
+    alert('Ошибка обновления')
+  }
+}
 </script>
 
 <template>
     <section class="login-form">
         <div class="login-form__wrapper">
-            <form @submit.prevent="addCard" action="#" class="form">
+            <form @submit.prevent="updateCard" action="#" class="form">
                 <h2 class="form__title">Обновление карточки</h2>
                 <div :class="['custom-input']">
                     <input v-model="dino_name" type="text" class="custom-input__field" placeholder="Имя динозавра">
                     <label for="user-email" class="custom-input__label">Название</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input  v-model="mini_description"type="text" class="custom-input__field" placeholder="Описание динозавра">
+                    <input v-model="mini_description" type="text" class="custom-input__field"
+                        placeholder="Описание динозавра">
                     <label for="user-email" class="custom-input__label">Описание</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input v-model="dino_page_id" type="number" class="custom-input__field" placeholder="id страницы динозавра">
+                    <input v-model="dino_page_id" type="number" class="custom-input__field"
+                        placeholder="id страницы динозавра">
                     <label for="user-email" class="custom-input__label">id страницы</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input @change="onImageChange" type="file" class="custom-input__field" placeholder="Картинка динозавра">
+                    <input @change="onImageChange" type="file" class="custom-input__field"
+                        placeholder="Картинка динозавра">
                     <label for="user-email" class="custom-input__label">Картинка</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input @change="onImage2xChange" type="file" class="custom-input__field" placeholder="Картинка динозавра">
+                    <input @change="onImage2xChange" type="file" class="custom-input__field"
+                        placeholder="Картинка динозавра">
                     <label for="user-email" class="custom-input__label">Картинка 2x</label>
                 </div>
                 <button class="form__btn">Обновить</button>
