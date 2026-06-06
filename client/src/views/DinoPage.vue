@@ -20,7 +20,7 @@ const getImage = (value) => {
 
 const loadDino = async (id) => {
     dino.value = null
-    const { data } = await api.get(`/dinoCard/${id}`)
+    const { data } = await api.get(`/dinoPage/${id}`)
     dino.value = data
 }
 
