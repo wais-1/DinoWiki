@@ -4,6 +4,30 @@ const pool = require('../db')
 const upload = require('../middleware/upload')
 const cloudinary = require('../config/cloudinary')
 
+// Получить страницу по id
+router.get('/:id', async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      'SELECT * FROM dino_page WHERE id = ?',
+      [req.params.id]
+    )
+
+    if (!rows.length) {
+      return res.status(404).json({
+        error: 'Страница не найдена'
+      })
+    }
+
+    res.json(rows[0])
+
+  } catch (err) {
+    res.status(500).json({
+      error: err.message
+    })
+  }
+})
+
+// Создать страницу
 router.post(
   '/',
   upload.fields([
@@ -91,7 +115,7 @@ router.post(
       })
 
     } catch (err) {
-      console.error('DINO PAGE ERROR:', err)
+      console.error(err)
 
       res.status(500).json({
         error: err.message
