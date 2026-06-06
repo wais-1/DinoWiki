@@ -8,9 +8,21 @@ const route = useRoute()
 
 const id = route.params.id
 
-const dino_name = ref('')
-const mini_description = ref('')
-const dino_page_id = ref('')
+const form = ref({
+  name: '',
+  habitat_period: '',
+  nutrition: '',
+  family: '',
+  length: '',
+  height: '',
+  weight: '',
+  appearance: '',
+  lifestyle: '',
+  dino_type: 'predator',
+  dino_location: 'ground',
+  dino_period: 'triassic',
+  food_type: 'carnivores'
+})
 
 const image = ref(null)
 const image2x = ref(null)
@@ -25,29 +37,45 @@ const onImage2xChange = (e) => {
   image2x.value = e.target.files[0]
 }
 
-const loadCard = async () => {
+const loadPage = async () => {
   try {
-    const { data } = await api.get(`/dinoCard/${id}`)
+    const { data } = await api.get(`/dinoPage/${id}`)
 
-    dino_name.value = data.dino_name || ''
-    mini_description.value = data.mini_description || ''
-    dino_page_id.value = data.dino_page_id || ''
+    form.value = {
+      name: data.name || '',
+      habitat_period: data.habitat_period || '',
+      nutrition: data.nutrition || '',
+      family: data.family || '',
+      length: data.length || '',
+      height: data.height || '',
+      weight: data.weight || '',
+      appearance: data.appearance || '',
+      lifestyle: data.lifestyle || '',
+      dino_type: data.dino_type || 'predator',
+      dino_location: data.dino_location || 'ground',
+
+      // колонка в БД с опечаткой
+      dino_period: data.dino_peripd || 'triassic',
+
+      // колонка в БД
+      food_type: data.dino_food || 'carnivores'
+    }
 
   } catch (err) {
     console.error(err)
-    alert('Не удалось загрузить карточку')
+    alert('Не удалось загрузить страницу')
   }
 }
 
-onMounted(loadCard)
+onMounted(loadPage)
 
-const updateCard = async () => {
+const updatePage = async () => {
   try {
     const formData = new FormData()
 
-    formData.append('dino_name', dino_name.value)
-    formData.append('mini_description', mini_description.value)
-    formData.append('dino_page_id', dino_page_id.value)
+    Object.entries(form.value).forEach(([key, value]) => {
+      formData.append(key, value)
+    })
 
     if (image.value) {
       formData.append('image', image.value)
@@ -58,7 +86,7 @@ const updateCard = async () => {
     }
 
     const { data } = await api.put(
-      `/dinoCard/${id}`,
+      `/dinoPage/${id}`,
       formData,
       {
         headers: {
@@ -69,8 +97,9 @@ const updateCard = async () => {
 
     console.log(data)
 
-    alert('Карточка обновлена')
-    router.push('/')
+    alert('Страница обновлена')
+
+    router.push(`/dinoPage/${id}`)
 
   } catch (err) {
     console.error(err)
@@ -88,21 +117,48 @@ const updateCard = async () => {
 <template>
     <section class="login-form">
         <div class="login-form__wrapper">
-            <form @submit.prevent="updateCard" action="#" class="form">
-                <h2 class="form__title">Обновление карточки</h2>
+            <form @submit.prevent="updateЗфпу" action="#" class="form">
+                <h2 class="form__title">Обновление страницы</h2>
                 <div :class="['custom-input']">
-                    <input v-model="dino_name" type="text" class="custom-input__field" placeholder="Имя динозавра">
-                    <label for="user-email" class="custom-input__label">Название</label>
+                    <input v-model="form.name" type="text" class="custom-input__field" placeholder="Имя динозавра">
+                    <label class="custom-input__label">Название</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input v-model="mini_description" type="text" class="custom-input__field"
-                        placeholder="Описание динозавра">
-                    <label for="user-email" class="custom-input__label">Описание</label>
+                    <input v-model="form.habitat_period" type="text" class="custom-input__field"
+                        placeholder="Период обитания динозавра">
+                    <label class="custom-input__label">Период обитания</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input v-model="dino_page_id" type="number" class="custom-input__field"
-                        placeholder="id страницы динозавра">
-                    <label for="user-email" class="custom-input__label">id страницы</label>
+                    <input v-model="form.nutrition" type="text" class="custom-input__field"
+                        placeholder="Питание динозавра">
+                    <label class="custom-input__label">Питание</label>
+                </div>
+                <div :class="['custom-input']">
+                    <input v-model="form.family" type="text" class="custom-input__field"
+                        placeholder="Семейство динозавра">
+                    <label class="custom-input__label">Семейство</label>
+                </div>
+                <div :class="['custom-input']">
+                    <input v-model="form.length" type="text" class="custom-input__field" placeholder="Длина динозавра">
+                    <label class="custom-input__label">Длина</label>
+                </div>
+                <div :class="['custom-input']">
+                    <input v-model="form.height" type="text" class="custom-input__field" placeholder="Высота динозавра">
+                    <label class="custom-input__label">Высота</label>
+                </div>
+                <div :class="['custom-input']">
+                    <input v-model="form.weight" type="text" class="custom-input__field" placeholder="Вес динозавра">
+                    <label class="custom-input__label">Вес</label>
+                </div>
+                <div :class="['custom-input']">
+                    <input v-model="form.appearance" type="text" class="custom-input__field"
+                        placeholder="Внешность динозавра">
+                    <label class="custom-input__label">Внешность</label>
+                </div>
+                <div :class="['custom-input']">
+                    <input v-model="form.lifestyle" type="text" class="custom-input__field"
+                        placeholder="Образ жизни динозавра">
+                    <label class="custom-input__label">Образ жизни</label>
                 </div>
                 <div :class="['custom-input']">
                     <input @change="onImageChange" type="file" class="custom-input__field"
@@ -114,6 +170,30 @@ const updateCard = async () => {
                         placeholder="Картинка динозавра">
                     <label for="user-email" class="custom-input__label">Картинка 2x</label>
                 </div>
+                <select v-model="form.dino_type" name="select_type" id="seletct-dino-type" class="custom-select">
+                    <option value="predator">predator</option>
+                    <option value="herbivorous">herbivorous</option>
+                    <option value="aquatic">aquatic</option>
+                    <option value="flying">flying</option>
+                </select>
+                <select v-model="form.dino_location" name="select_location" id="seletct-dino-location"
+                    class="custom-select">
+                    <option value="ground">ground</option>
+                    <option value="water">water</option>
+                    <option value="fly">fly</option>
+                </select>
+                <select v-model="form.dino_period" name="select_period" id="seletct-dino-period" class="custom-select">
+                    <option value="triassic">triassic</option>
+                    <option value="jurassic">jurassic</option>
+                    <option value="chalky">chalky</option>
+                </select>
+                <select v-model="form.food_type" name="select_food" id="seletct-dino-food" class="custom-select">
+                    <option value="carnivores">carnivores</option>
+                    <option value="herbivores">herbivores</option>
+                    <option value="omnivores">omnivores</option>
+                    <option value="piscivores">piscivores</option>
+                    <option value="insectivores">insectivores</option>
+                </select>
                 <button class="form__btn">Обновить</button>
             </form>
         </div>
