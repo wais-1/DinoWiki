@@ -105,38 +105,50 @@ router.post(
 )
 
 // Обновить карточку
-router.put('/:id', async (req, res) => {
-  try {
-    const {
-      dino_name,
-      mini_description,
-      dino_page_id
-    } = req.body
+router.put(
+  '/:id',
+  upload.fields([
+    { name: 'image', maxCount: 1 },
+    { name: 'image2x', maxCount: 1 }
+  ]),
+  async (req, res) => {
+    try {
 
-    await pool.query(
-      `UPDATE dino_card
-       SET
-         dino_name = ?,
-         mini_description = ?,
-         dino_page_id = ?
-       WHERE id = ?`,
-      [
+      console.log(req.body)
+
+      const {
         dino_name,
         mini_description,
-        dino_page_id,
-        req.params.id
-      ]
-    )
+        dino_page_id
+      } = req.body
 
-    res.json({
-      message: 'Карточка обновлена'
-    })
+      await pool.query(
+        `UPDATE dino_card
+         SET
+           dino_name = ?,
+           mini_description = ?,
+           dino_page_id = ?
+         WHERE id = ?`,
+        [
+          dino_name,
+          mini_description,
+          dino_page_id,
+          req.params.id
+        ]
+      )
 
-  } catch (err) {
-    res.status(500).json({
-      error: err.message
-    })
+      res.json({
+        message: 'Карточка обновлена'
+      })
+
+    } catch (err) {
+      console.error('UPDATE CARD ERROR:', err)
+
+      res.status(500).json({
+        error: err.message
+      })
+    }
   }
-})
+)
 
 module.exports = router
