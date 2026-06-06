@@ -117,7 +117,7 @@ const updatePage = async () => {
 <template>
     <section class="login-form">
         <div class="login-form__wrapper">
-            <form @submit.prevent="updateЗфпу" action="#" class="form">
+            <form @submit.prevent="updatePage" action="#" class="form">
                 <h2 class="form__title">Обновление страницы</h2>
                 <div :class="['custom-input']">
                     <input v-model="form.name" type="text" class="custom-input__field" placeholder="Имя динозавра">
