@@ -2,11 +2,16 @@
 import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import api from '@/api'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
 
 const route = useRoute()
 const router = useRouter()
 const dino = ref(null)
 const goBack = () => router.push('/')
+
+const id = route.params.id
 
 const getImage = (value) => {
     if (!value) return ''
@@ -75,6 +80,11 @@ watch(() => route.params.id, (id) => loadDino(id))
                     class="dino-page__img" alt="картинка динозавра" />
             </div>
             <button :class="['dino-page__back', `dino-page__back--${dino.dino_type}`]" @click="goBack">назад</button>
+            <div class="card-btns" v-if="authStore.isAdmin">
+                <button v-if="authStore.isAdmin" class="card-content__delete">Удалить</button>
+                <RouterLink :to="`/edit-page/${id}`" v-if="authStore.isAdmin" class="card-content__update">Обновить
+                </RouterLink>
+            </div>
         </div>
     </section>
 </template>
@@ -199,5 +209,43 @@ watch(() => route.params.id, (id) => loadDino(id))
 
 .dino-page__back--aquatic {
     background-color: #357997;
+}
+
+.card-btns {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 25px;
+}
+
+.card-content__delete {
+    border: none;
+    padding: 16px 29px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #F9F6F0;
+    background-color: #536C4F;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.card-content__delete:hover {
+    background-color: #404e3d;
+}
+
+.card-content__update {
+    border: none;
+    padding: 16px 29px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #F9F6F0;
+    background-color: #ab7a2f;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+
+.card-content__update:hover {
+    background-color: #855e25;
 }
 </style>
