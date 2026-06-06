@@ -49,7 +49,7 @@ const isFilterOpened = ref(false)
                     </button>
                 </div>
                 <div class="card__wrapper">
-                    <CardComp v-for="item in filteredDino" :key="item.id" :title="item.dino_name"
+                    <CardComp v-for="item in filteredDino" :id="item.id" :key="item.id" :title="item.dino_name"
                         :description="item.mini_description" :image="item.dino_card_img"
                         :image2x="item.dino_card_img_2x" :dino-page-id="item.dino_page_id"></CardComp>
                 </div>

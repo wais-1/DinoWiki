@@ -22,7 +22,7 @@ const router = createRouter({
     { path: '/account', component: Account },
     { path: '/addCard', component: AddCard },
     { path: '/addPage', component: AddPage },
-    { path: '/updateCard', component: updateCard },
+    { path: '/edit-card/:id', component: updateCard },
     { 
       path: '/admin', 
       component: Admin,
