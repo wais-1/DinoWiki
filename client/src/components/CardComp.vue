@@ -1,6 +1,8 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth'
+import { ref } from 'vue'
 const authStore = useAuthStore()
+
 
 defineProps({
     id: Number,
@@ -24,9 +26,29 @@ const getImage = (value) => {
     return new URL(`../images/${value}`, import.meta.url).href
 }
 
-const btnLiked = (event) => {
+const liked = ref(props.isFavorite === 'liked')
+
+const btnLiked = async (event) => {
     event.preventDefault()
-    event.currentTarget.classList.toggle('clicked')
+
+    try {
+        const newStatus =
+            liked.value
+                ? 'none'
+                : 'liked'
+
+        await api.put(
+            `/dinoCard/favorite/${props.id}`,
+            {
+                favorite_status: newStatus
+            }
+        )
+
+        liked.value = !liked.value
+
+    } catch (err) {
+        console.error(err)
+    }
 }
 </script>
 
@@ -44,7 +66,7 @@ const btnLiked = (event) => {
             </div>
             <slot></slot>
         </RouterLink>
-        <button @click.stop="btnLiked" class="card__like">
+        <button @click.stop="btnLiked" :class="['card__like', { clicked: liked }]">
             <svg class="icon-like" width="48" height="48" viewBox="0 0 48 48" fill="none"
                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <rect width="48" height="48" fill="url(#pattern0_54_339)" />
