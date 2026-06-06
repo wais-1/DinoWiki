@@ -6,16 +6,6 @@ import api from '@/api'
 const router = useRouter()
 const goBack = () => router.push('/')
 
-const image = ref(null)
-const image2x = ref(null)
-
-const onImageChange = (e) => {
-  image.value = e.target.files[0]
-}
-
-const onImage2xChange = (e) => {
-  image2x.value = e.target.files[0]
-}
 
 const form = ref({
     name: '',
@@ -35,16 +25,7 @@ const form = ref({
 })
 
 const addPage = async () => {
-    const formData = new FormData()
-
-    formData.append('dino_name', dino_name.value)
-    formData.append('mini_description', mini_description.value)
-    formData.append('dino_page_id', dino_page_id.value)
-
-    formData.append('image', image.value)
-    formData.append('image2x', image2x.value)
-
-    const { data } = await api.post('/dinoCard', formData)
+    const { data } = await api.post('/dinoPage', form.value)
 
     alert(`success. ID = ${data.id}`)
 }

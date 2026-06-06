@@ -10,15 +10,49 @@ const dino_name = ref('')
 const mini_description = ref('')
 const dino_page_id = ref('')
 
-const addCard = async () => {
-    await api.post('/dinoCard', {
-        dino_name: dino_name.value,
-        mini_description: mini_description.value,
-        dino_page_id: dino_page_id.value
-    })
+const image = ref(null)
+const image2x = ref(null)
 
-    alert('success')
-    console.log('dinoPageId =', props.dinoPageId)
+const onImageChange = (e) => {
+  image.value = e.target.files[0]
+}
+
+const onImage2xChange = (e) => {
+  image2x.value = e.target.files[0]
+}
+
+const addCard = async () => {
+  try {
+    const formData = new FormData()
+
+    formData.append('dino_name', dino_name.value)
+    formData.append('mini_description', mini_description.value)
+    formData.append('dino_page_id', dino_page_id.value)
+
+    if (image.value) {
+      formData.append('image', image.value)
+    }
+
+    if (image2x.value) {
+      formData.append('image2x', image2x.value)
+    }
+
+    const { data } = await api.post(
+      '/dinoCard',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+    )
+
+    alert(`success. ID = ${data.id}`)
+
+  } catch (err) {
+    console.error(err)
+    alert('Ошибка при создании карточки')
+  }
 }
 </script>
 
@@ -40,11 +74,11 @@ const addCard = async () => {
                     <label for="user-email" class="custom-input__label">id страницы</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="file" class="custom-input__field" placeholder="Картинка динозавра">
+                    <input @change="onImageChange" type="file" class="custom-input__field" placeholder="Картинка динозавра">
                     <label for="user-email" class="custom-input__label">Картинка</label>
                 </div>
                 <div :class="['custom-input']">
-                    <input type="file" class="custom-input__field" placeholder="Картинка динозавра">
+                    <input @change="onImage2xChange" type="file" class="custom-input__field" placeholder="Картинка динозавра">
                     <label for="user-email" class="custom-input__label">Картинка 2x</label>
                 </div>
                 <button class="form__btn">Добавить</button>
