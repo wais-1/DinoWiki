@@ -47,7 +47,7 @@ router.post(
         image2x = result.secure_url
       }
 
-      const [resultDb] = await pool.query(
+      const [result] = await pool.query(
         `INSERT INTO dino_page
         (
           name,
@@ -87,11 +87,11 @@ router.post(
       )
 
       res.json({
-        id: resultDb.insertId
+        id: result.insertId
       })
 
     } catch (err) {
-      console.error(err)
+      console.error('DINO PAGE ERROR:', err)
 
       res.status(500).json({
         error: err.message
