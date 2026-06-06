@@ -8,16 +8,14 @@ const router = useRouter()
 const dino = ref(null)
 const goBack = () => router.push('/')
 
-const getImage = (filename) => {
-    if (!filename) return ''
+const getImage = (value) => {
+    if (!value) return ''
 
-    // загруженные пользователем картинки
-    if (filename.includes('-img-card-')) {
-        return `https://dinowiki-production.up.railway.app/uploads/${filename}`
+    if (value.startsWith('http')) {
+        return value
     }
 
-    // картинки проекта из src/images
-    return new URL(`../images/${filename}`, import.meta.url).href
+    return new URL(`../images/${value}`, import.meta.url).href
 }
 
 const loadDino = async (id) => {
@@ -72,8 +70,9 @@ watch(() => route.params.id, (id) => loadDino(id))
                         <span class="page-wrapper__text">{{ dino.lifestyle }}</span>
                     </div>
                 </div>
-                <img v-if="dino.dino_page_img" :src="dino.dino_page_img" :srcset="`${dino.dino_page_img_2x} 2x`"
-                    class="dino-page__img" alt="картинка динозавра">
+                <img v-if="dino.dino_page_img" :src="getImage(dino.dino_page_img)"
+                    :srcset="dino.dino_page_img_2x ? `${getImage(dino.dino_page_img_2x)} 2x` : ''"
+                    class="dino-page__img" alt="картинка динозавра" />
             </div>
             <button :class="['dino-page__back', `dino-page__back--${dino.dino_type}`]" @click="goBack">назад</button>
         </div>

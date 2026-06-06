@@ -11,16 +11,16 @@ defineProps({
     dinoPageId: Number
 })
 
-const getImage = (filename) => {
-    if (!filename) return ''
+const getImage = (value) => {
+    if (!value) return ''
 
-    // загруженные пользователем картинки
-    if (filename.includes('-img-card-')) {
-        return `https://dinowiki-production.up.railway.app/uploads/${filename}`
+    // Cloudinary URL
+    if (value.startsWith('http')) {
+        return value
     }
 
-    // картинки проекта из src/images
-    return new URL(`../images/${filename}`, import.meta.url).href
+    // локальные картинки проекта
+    return new URL(`../images/${value}`, import.meta.url).href
 }
 
 const btnLiked = (event) => {
@@ -33,8 +33,8 @@ const btnLiked = (event) => {
     <div class="card-comp">
         <RouterLink class="card" :to="`/dino/${dinoPageId}`">
             <div class="card__img-wrap">
-                <img v-if="image" :src="card.dino_card_img" :srcset="`${card.dino_card_img_2x} 2x`" class="card__img"
-                    alt="картинка карточки">
+                <img v-if="image" :src="getImage(image)" :srcset="image2x ? `${getImage(image2x)} 2x` : ''"
+                    class="card__img" alt="картинка карточки" />
                 <span class="card__hover">Читать</span>
             </div>
             <div class="card-content">
