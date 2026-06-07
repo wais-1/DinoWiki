@@ -97,7 +97,7 @@ onMounted(async () => {
 
 <template>
     <div class="card-comp">
-        <RouterLink class="card" :to="`/dino/${dinoPageId}`" @click="addToHistory">
+        <RouterLink class="card" :to="`/dino/${dinoPageId}`">
             <div class="card__img-wrap">
                 <img v-if="image" :src="getImage(image)" :srcset="image2x ? `${getImage(image2x)} 2x` : ''"
                     class="card__img" alt="картинка карточки" />
