@@ -7,10 +7,24 @@ const cloudinary = require('../config/cloudinary')
 // Все карточки
 router.get('/', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM dino_card')
+    const [rows] = await pool.query(`
+      SELECT
+        dc.*,
+        dp.dino_type,
+        dp.dino_location,
+        dp.dino_peripd,
+        dp.dino_food
+      FROM dino_card dc
+      INNER JOIN dino_page dp
+      ON dc.dino_page_id = dp.id
+    `)
+
     res.json(rows)
+
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    res.status(500).json({
+      error: err.message
+    })
   }
 })
 
@@ -18,7 +32,18 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const [rows] = await pool.query(
-      'SELECT * FROM dino_card WHERE id = ?',
+      `
+      SELECT
+        dc.*,
+        dp.dino_type,
+        dp.dino_location,
+        dp.dino_peripd,
+        dp.dino_food
+      FROM dino_card dc
+      INNER JOIN dino_page dp
+      ON dc.dino_page_id = dp.id
+      WHERE dc.id = ?
+      `,
       [req.params.id]
     )
 
