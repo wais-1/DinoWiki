@@ -15,6 +15,7 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/auth',  require('./routes/auth'));
 app.use('/api/dinoCard', require('./routes/dinoCard'));
 app.use('/api/dinoPage', require('./routes/dinoPage'));
+app.use('/api/favorite', require('./routes/favorite'))
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Сервер запущен на порту ${PORT}`));

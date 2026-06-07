@@ -151,29 +151,5 @@ router.put(
   }
 )
 
-router.put('/favorite/:id', async (req, res) => {
-  try {
-    const { favorite_status } = req.body
-
-    await pool.query(
-      `UPDATE dino_card
-       SET favorite_status = ?
-       WHERE id = ?`,
-      [
-        favorite_status,
-        req.params.id
-      ]
-    )
-
-    res.json({
-      success: true
-    })
-
-  } catch (err) {
-    res.status(500).json({
-      error: err.message
-    })
-  }
-})
 
 module.exports = router
