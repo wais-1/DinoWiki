@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores/auth'
 import { ref, onMounted } from 'vue'
 import api from '@/api'
 const authStore = useAuthStore()
+import BrowsingHistory from '@/views/BrowsingHistory.vue'
 
 
 const props = defineProps({
@@ -64,6 +65,18 @@ const btnLiked = async (event) => {
     console.error(err)
   }
 }
+const addToHistory = async () => {
+  if (!authStore.user) return
+
+  try {
+    await api.post('/browsing-history/', {
+      dino_card_id: props.id,
+      id_user: authStore.user.id
+    })
+  } catch (err) {
+    console.error('Ошибка записи истории:', err)
+  }
+}
 
 onMounted(async () => {
   try {
@@ -84,7 +97,7 @@ onMounted(async () => {
 
 <template>
     <div class="card-comp">
-        <RouterLink class="card" :to="`/dino/${dinoPageId}`">
+        <RouterLink class="card" :to="`/dino/${dinoPageId}`" @click="addToHistory">
             <div class="card__img-wrap">
                 <img v-if="image" :src="getImage(image)" :srcset="image2x ? `${getImage(image2x)} 2x` : ''"
                     class="card__img" alt="картинка карточки" />

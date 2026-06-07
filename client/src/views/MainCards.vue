@@ -115,6 +115,7 @@ const resetFilters = () => {
     gap: 60px;
     flex-wrap: wrap;
     justify-content: flex-start;
+    padding: 0 90px;
 }
 
 .main-cards {
