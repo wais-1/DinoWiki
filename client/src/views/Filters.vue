@@ -29,7 +29,7 @@ const selectFood = (value) => {
             <div class="filters-main">
                 <h3 class="filters-main__title">по питанию</h3>
                 <div class="filters-btns">
-                    <button @click="selectType('carnivores')" class="filters-btns__btn">
+                    <button @click="selectFood('carnivores')" class="filters-btns__btn">
                         <svg width="32" height="35" viewBox="0 0 32 35" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="32" height="35" fill="url(#pattern0_51_254)" />
@@ -45,7 +45,7 @@ const selectFood = (value) => {
                         </svg>
                         плотоядные
                     </button>
-                    <button @click="selectType('herbivores')" class="filters-btns__btn">
+                    <button @click="selectFood('herbivores')" class="filters-btns__btn">
                         <svg width="34" height="37" viewBox="0 0 34 37" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="34" height="37" fill="url(#pattern0_51_255)" />
@@ -61,7 +61,7 @@ const selectFood = (value) => {
                         </svg>
                         травоядные
                     </button>
-                    <button @click="selectType('omnivores')" class="filters-btns__btn">
+                    <button @click="selectFood('omnivores')" class="filters-btns__btn">
                         <svg width="32" height="35" viewBox="0 0 32 35" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="32" height="35" fill="url(#pattern0_51_257)" />
@@ -77,7 +77,7 @@ const selectFood = (value) => {
                         </svg>
                         всеядные
                     </button>
-                    <button @click="selectType('piscivores')" class="filters-btns__btn">
+                    <button @click="selectFood('piscivores')" class="filters-btns__btn">
                         <svg width="36" height="30" viewBox="0 0 36 30" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="36" height="30" fill="url(#pattern0_51_259)" />
@@ -93,7 +93,7 @@ const selectFood = (value) => {
                         </svg>
                         рыбоядные
                     </button>
-                    <button @click="selectType('insectivores')" class="filters-btns__btn">
+                    <button @click="selectFood('insectivores')" class="filters-btns__btn">
                         <svg width="35" height="25" viewBox="0 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="25" fill="url(#pattern0_51_261)" />
@@ -114,7 +114,7 @@ const selectFood = (value) => {
             <div class="filters-main">
                 <h3 class="filters-main__title">по нахождению</h3>
                 <div class="filters-btns">
-                    <button @click="selectType('ground')" class="filters-btns__btn">
+                    <button @click="selectLocation('ground')" class="filters-btns__btn">
                         <svg width="35" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="34" fill="url(#pattern0_51_263)" />
@@ -130,7 +130,7 @@ const selectFood = (value) => {
                         </svg>
                         наземные
                     </button>
-                    <button @click="selectType('water')" class="filters-btns__btn">
+                    <button @click="selectLocation('water')" class="filters-btns__btn">
                         <svg width="35" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="34" fill="url(#pattern0_51_264)" />
@@ -146,7 +146,7 @@ const selectFood = (value) => {
                         </svg>
                         водные
                     </button>
-                    <button @click="selectType('fly')" class="filters-btns__btn">
+                    <button @click="selectLocation('fly')" class="filters-btns__btn">
                         <svg width="35" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="34" fill="url(#pattern0_51_266)" />
@@ -167,7 +167,7 @@ const selectFood = (value) => {
             <div class="filters-main">
                 <h3 class="filters-main__title">по периоду</h3>
                 <div class="filters-btns">
-                    <button @click="selectType('triassic')" class="filters-btns__btn">
+                    <button @click="selectPeriod('triassic')" class="filters-btns__btn">
                         <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="36" fill="url(#pattern0_52_268)" />
@@ -183,7 +183,7 @@ const selectFood = (value) => {
                         </svg>
                         триасовый
                     </button>
-                    <button @click="selectType('jurassic')" class="filters-btns__btn">
+                    <button @click="selectPeriod('jurassic')" class="filters-btns__btn">
                         <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="36" fill="url(#pattern0_52_269)" />
@@ -199,7 +199,7 @@ const selectFood = (value) => {
                         </svg>
                         юрский
                     </button>
-                    <button @click="selectType('chalky')" class="filters-btns__btn">
+                    <button @click="selectPeriod('chalky')" class="filters-btns__btn">
                         <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="36" fill="url(#pattern0_52_271)" />
