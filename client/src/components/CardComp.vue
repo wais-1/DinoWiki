@@ -65,18 +65,6 @@ const btnLiked = async (event) => {
     console.error(err)
   }
 }
-const addToHistory = async () => {
-  if (!authStore.user) return
-
-  try {
-    await api.post('/browsing-history/', {
-      dino_card_id: props.id,
-      id_user: authStore.user.id
-    })
-  } catch (err) {
-    console.error('Ошибка записи истории:', err)
-  }
-}
 
 onMounted(async () => {
   try {
