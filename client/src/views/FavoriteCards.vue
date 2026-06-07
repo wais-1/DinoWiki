@@ -1,13 +1,21 @@
 <script setup>
-import CardComp from '@/components/CardComp.vue';
+import CardComp from '@/components/CardComp.vue'
 import { ref, onMounted } from 'vue'
-import api from '@/api';
+import { useAuthStore } from '@/stores/auth'
+import api from '@/api'
+
+const authStore = useAuthStore()
 
 const favorites = ref([])
 
 const loadFavorites = async () => {
     try {
-        const { data } = await api.get('/dinoCard/favorites/all')
+
+        if (!authStore.user) return
+
+        const { data } = await api.get(
+            `/favorite/${authStore.user.id}`
+        )
 
         favorites.value = data
 
@@ -22,30 +30,7 @@ onMounted(loadFavorites)
     <div class="common-wrapper">
         <section class="main-cards snap-section" id="catalog" :class="{ 'shifted': isFilterOpened }">
             <div class="container">
-                <div class="main-cards__wrapper">
-                    <div class="custom-search">
-                        <svg class="custom__search-icon" width="31" height="30" viewBox="0 0 31 30" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="9.66966" cy="9.66966" r="6.34144" transform="rotate(43.052 9.66966 9.66966)"
-                                stroke="#C4511B" stroke-opacity="0.55" />
-                            <path
-                                d="M25.1531 23.0312C25.5035 23.3585 25.5221 23.9078 25.1948 24.2582C24.8674 24.6087 24.3182 24.6273 23.9677 24.3L15.3345 16.2347L16.5198 14.9659L25.1531 23.0312Z"
-                                stroke="#C4511B" stroke-opacity="0.55" />
-                        </svg>
-                        <input v-model="searchQuery" type="search" class="custom-search__field"
-                            placeholder="Введите имя динозавра">
-                    </div>
-                    <button @click.prevent="isFilterOpened = !isFilterOpened" class="filters-btn">
-                        <span class="filters__text">Фильтры</span>
-                        <svg width="9" height="5" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <line x1="0.353553" y1="0.353539" x2="4.42462" y2="4.42461" stroke="#D95A1C" />
-                            <line y1="-0.5" x2="5.75736" y2="-0.5"
-                                transform="matrix(-0.707107 0.707107 0.707107 0.707107 8.1012 0.707092)"
-                                stroke="#D95A1C" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="card__wrapper">
+                <div v-if="favorites.length" class="card__wrapper">
                     <CardComp v-for="item in favorites" :key="item.id" :id="item.id" :title="item.dino_name"
                         :description="item.mini_description" :image="item.dino_card_img"
                         :image2x="item.dino_card_img_2x" :dino-page-id="item.dino_page_id"

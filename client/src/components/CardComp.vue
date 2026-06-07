@@ -1,6 +1,6 @@
 <script setup>
 import { useAuthStore } from '@/stores/auth'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import api from '@/api'
 const authStore = useAuthStore()
 
@@ -27,30 +27,59 @@ const getImage = (value) => {
     return new URL(`../images/${value}`, import.meta.url).href
 }
 
-const liked = ref(props.isFavorite === 'liked')
+const liked = ref(false)
 
 const btnLiked = async (event) => {
-    event.preventDefault()
+  event.preventDefault()
 
-    try {
-        const newStatus =
-            liked.value
-                ? 'none'
-                : 'liked'
+  try {
 
-        await api.put(
-            `/dinoCard/favorite/${props.id}`,
-            {
-                favorite_status: newStatus
-            }
-        )
-
-        liked.value = !liked.value
-
-    } catch (err) {
-        console.error(err)
+    if (!authStore.user) {
+      alert('Войдите в аккаунт')
+      return
     }
+
+    if (!liked.value) {
+
+      await api.post('/favorite', {
+        dino_card_id: props.id,
+        id_user: authStore.user.id
+      })
+
+      liked.value = true
+
+    } else {
+
+      await api.delete('/favorite', {
+        data: {
+          dino_card_id: props.id,
+          id_user: authStore.user.id
+        }
+      })
+
+      liked.value = false
+    }
+
+  } catch (err) {
+    console.error(err)
+  }
 }
+
+onMounted(async () => {
+  try {
+
+    if (!authStore.user) return
+
+    const { data } = await api.get(
+      `/favorite/check/${authStore.user.id}/${props.id}`
+    )
+
+    liked.value = data.liked
+
+  } catch (err) {
+    console.error(err)
+  }
+})
 </script>
 
 <template>
