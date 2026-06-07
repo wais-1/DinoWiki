@@ -37,18 +37,18 @@ const addToHistory = async (dinoId) => {
     }
 }
 
-const clearHistory = async () => {
-    try {
-        await api.delete('/browsing-history/', {
-            headers: {
-                Authorization: `Bearer ${authStore.token}`
-            }
-        })
-        history.value = []
-    } catch (error) {
-        console.error('Ошибка очистки истории:', error)
-    }
-}
+// const clearHistory = async () => {
+//     try {
+//         await api.delete('/browsing-history/', {
+//             headers: {
+//                 Authorization: `Bearer ${authStore.token}`
+//             }
+//         })
+//         history.value = []
+//     } catch (error) {
+//         console.error('Ошибка очистки истории:', error)
+//     }
+// }
 
 onMounted(() => {
     fetchHistory()
@@ -56,10 +56,10 @@ onMounted(() => {
 </script>
 <template>
     <div class="common-wrapper">
-        <section class="main-cards snap-section" :class="{ 'shifted': isFilterOpened }">
+        <section class="main-cards snap-section">
             <div class="container">
                 <div v-if="history.length" class="card__wrapper">
-                    <CardComp v-for="item in history" :key="item.id" :id="item.id" :title="item.dino_name"
+                    <CardComp @click="addToHistory(item.id)" v-for="item in history" :key="item.id" :id="item.id" :title="item.dino_name"
                         :description="item.mini_description" :image="item.dino_card_img"
                         :image2x="item.dino_card_img_2x" :dino-page-id="item.dino_page_id"
                         :is-favorite="item.favorite_status" />
