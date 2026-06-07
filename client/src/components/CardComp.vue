@@ -68,13 +68,13 @@ const btnLiked = async (event) => {
             <slot></slot>
         </RouterLink>
         <button @click.stop="btnLiked" :class="['card__like', { clicked: liked }]">
-            <svg class="icon-like" width="48" height="48" viewBox="0 0 48 48" fill="none"
+            <svg class="icon-like" width="38" height="38" viewBox="0 0 48 48" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M23.9997 8.24415L21.8487 6.03315C16.7997 0.843146 7.54168 2.63415 4.19968 9.15915C2.63068 12.2281 2.27668 16.6591 5.14168 22.3141C7.90168 27.7591 13.6437 34.2811 23.9997 41.3851C34.3557 34.2811 40.0947 27.7591 42.8577 22.3141C45.7227 16.6561 45.3717 12.2281 43.7997 9.15915C40.4577 2.63415 31.1997 0.840146 26.1507 6.03015L23.9997 8.24415ZM23.9997 45.0001C-21.9993 14.6041 9.83668 -9.11985 23.4717 3.42915C23.6517 3.59515 23.8277 3.76615 23.9997 3.94215C24.1687 3.76504 24.3448 3.59489 24.5277 3.43215C38.1597 -9.12585 69.9987 14.6011 23.9997 45.0001Z"
                     fill="#C4511B" />
             </svg>
-            <svg class="icon-liked" width="48" height="48" viewBox="0 0 48 48" fill="none"
+            <svg class="icon-liked" width="38" height="38" viewBox="0 0 48 48" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M23.9993 3.94215C37.3133 -9.74384 70.6014 14.2052 23.9993 45.0002C-22.6027 14.2082 10.6853 -9.74384 23.9993 3.94215Z"

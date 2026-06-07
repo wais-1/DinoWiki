@@ -11,6 +11,7 @@ import AddPage from '@/views/AddPage.vue'
 import { useAuthStore } from '@/stores/auth'
 import updateCard from '@/views/updateCard.vue'
 import UpdatePage from '@/views/UpdatePage.vue'
+import FavoriteCards from '@/views/FavoriteCards.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -25,6 +26,7 @@ const router = createRouter({
     { path: '/addPage', component: AddPage },
     { path: '/edit-card/:id', component: updateCard },
     { path: '/edit-page/:id', component: UpdatePage },
+    { path: '/favoriteCards', component: FavoriteCards },
     { 
       path: '/admin', 
       component: Admin,
