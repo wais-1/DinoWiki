@@ -51,7 +51,7 @@ const isFilterOpened = ref(false)
                 <div class="card__wrapper">
                     <CardComp v-for="item in filteredDino" :id="item.id" :key="item.id" :title="item.dino_name"
                         :description="item.mini_description" :image="item.dino_card_img"
-                        :image2x="item.dino_card_img_2x" :dino-page-id="item.dino_page_id"></CardComp>
+                        :image2x="item.dino_card_img_2x" :dino-page-id="item.dino_page_id" :is-favorite="item.favorite_status"></CardComp>
                 </div>
             </div>
         </section>
