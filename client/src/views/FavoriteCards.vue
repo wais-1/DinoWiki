@@ -3,6 +3,10 @@ import CardComp from '@/components/CardComp.vue'
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth'
 import api from '@/api'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const goBack = () => router.push('/')
 
 const authStore = useAuthStore()
 
@@ -37,6 +41,7 @@ onMounted(loadFavorites)
                         :is-favorite="item.favorite_status" />
                 </div>
             </div>
+            <button @click="goBack" class="account__back">назад</button>
         </section>
     </div>
 </template>
@@ -110,5 +115,19 @@ onMounted(loadFavorites)
 
 .filters-btn:hover {
     opacity: 0.7;
+}
+
+.account__back {
+    border: none;
+    background-color: #D95A1C;
+    padding: 16px 30px;
+    color: #F9F6F0;
+    font-size: 18px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    position: absolute;
+    top: 150px;
+    left: 82px;
+    cursor: pointer;
 }
 </style>

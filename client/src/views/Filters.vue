@@ -1,18 +1,26 @@
 <script setup>
-// import api from '@/api';
-
-// const foodFilter = computed(() => {
-//     return cardData.value.filter(item =>
-//         item.dino_food
-//     )
-// })
-
-defineProps({
-    isOpen: {
-        type: Boolean,
-        required: true
-    }
+const props = defineProps({
+  isOpen: Boolean
 })
+
+const emit = defineEmits([
+  'update:isOpen',
+  'update:location',
+  'update:period',
+  'update:food'
+])
+
+const selectLocation = (value) => {
+  emit('update:location', value)
+}
+
+const selectPeriod = (value) => {
+  emit('update:period', value)
+}
+
+const selectFood = (value) => {
+  emit('update:food', value)
+}
 </script>
 
 <template>
@@ -21,7 +29,7 @@ defineProps({
             <div class="filters-main">
                 <h3 class="filters-main__title">по питанию</h3>
                 <div class="filters-btns">
-                    <button class="filters-btns__btn">
+                    <button @click="selectType('carnivores')" class="filters-btns__btn">
                         <svg width="32" height="35" viewBox="0 0 32 35" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="32" height="35" fill="url(#pattern0_51_254)" />
@@ -37,7 +45,7 @@ defineProps({
                         </svg>
                         плотоядные
                     </button>
-                    <button class="filters-btns__btn">
+                    <button @click="selectType('herbivores')" class="filters-btns__btn">
                         <svg width="34" height="37" viewBox="0 0 34 37" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="34" height="37" fill="url(#pattern0_51_255)" />
@@ -53,7 +61,7 @@ defineProps({
                         </svg>
                         травоядные
                     </button>
-                    <button class="filters-btns__btn">
+                    <button @click="selectType('omnivores')" class="filters-btns__btn">
                         <svg width="32" height="35" viewBox="0 0 32 35" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="32" height="35" fill="url(#pattern0_51_257)" />
@@ -69,7 +77,7 @@ defineProps({
                         </svg>
                         всеядные
                     </button>
-                    <button class="filters-btns__btn">
+                    <button @click="selectType('piscivores')" class="filters-btns__btn">
                         <svg width="36" height="30" viewBox="0 0 36 30" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="36" height="30" fill="url(#pattern0_51_259)" />
@@ -85,7 +93,7 @@ defineProps({
                         </svg>
                         рыбоядные
                     </button>
-                    <button class="filters-btns__btn">
+                    <button @click="selectType('insectivores')" class="filters-btns__btn">
                         <svg width="35" height="25" viewBox="0 0 35 25" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="25" fill="url(#pattern0_51_261)" />
@@ -106,7 +114,7 @@ defineProps({
             <div class="filters-main">
                 <h3 class="filters-main__title">по нахождению</h3>
                 <div class="filters-btns">
-                    <button class="filters-btns__btn">
+                    <button @click="selectType('ground')" class="filters-btns__btn">
                         <svg width="35" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="34" fill="url(#pattern0_51_263)" />
@@ -122,7 +130,7 @@ defineProps({
                         </svg>
                         наземные
                     </button>
-                    <button class="filters-btns__btn">
+                    <button @click="selectType('water')" class="filters-btns__btn">
                         <svg width="35" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="34" fill="url(#pattern0_51_264)" />
@@ -138,7 +146,7 @@ defineProps({
                         </svg>
                         водные
                     </button>
-                    <button class="filters-btns__btn">
+                    <button @click="selectType('fly')" class="filters-btns__btn">
                         <svg width="35" height="34" viewBox="0 0 35 34" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="34" fill="url(#pattern0_51_266)" />
@@ -159,7 +167,7 @@ defineProps({
             <div class="filters-main">
                 <h3 class="filters-main__title">по периоду</h3>
                 <div class="filters-btns">
-                    <button class="filters-btns__btn">
+                    <button @click="selectType('triassic')" class="filters-btns__btn">
                         <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="36" fill="url(#pattern0_52_268)" />
@@ -175,7 +183,7 @@ defineProps({
                         </svg>
                         триасовый
                     </button>
-                    <button class="filters-btns__btn">
+                    <button @click="selectType('jurassic')" class="filters-btns__btn">
                         <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="36" fill="url(#pattern0_52_269)" />
@@ -191,7 +199,7 @@ defineProps({
                         </svg>
                         юрский
                     </button>
-                    <button class="filters-btns__btn">
+                    <button @click="selectType('chalky')" class="filters-btns__btn">
                         <svg width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink">
                             <rect width="35" height="36" fill="url(#pattern0_52_271)" />

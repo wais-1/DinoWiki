@@ -1,25 +1,69 @@
 <script setup>
-import CardComp from '@/components/CardComp.vue';
+import CardComp from '@/components/CardComp.vue'
+import Filters from './Filters.vue'
 import { ref, onMounted, computed } from 'vue'
-import api from '@/api';
-import Filters from './Filters.vue';
+import api from '@/api'
 
 const cardData = ref([])
-onMounted(async () => {
-    const { data } = await api.get('/dinoCard')
-    cardData.value = data
-})
+
+const isFilterOpened = ref(false)
 
 const searchQuery = ref('')
 
-const filteredDino = computed(() => {
-    if (!searchQuery.value) return cardData.value
-    return cardData.value.filter(item =>
-        item.dino_name.toLowerCase().includes(searchQuery.value.toLowerCase())
-    )
+const selectedLocation = ref('')
+const selectedPeriod = ref('')
+const selectedFood = ref('')
+
+onMounted(async () => {
+    try {
+        const { data } = await api.get('/dinoCard')
+        cardData.value = data
+    } catch (err) {
+        console.error(err)
+    }
 })
 
-const isFilterOpened = ref(false)
+const filteredDino = computed(() => {
+    let result = [...cardData.value]
+
+    // поиск
+    if (searchQuery.value) {
+        result = result.filter(item =>
+            item.dino_name
+                .toLowerCase()
+                .includes(searchQuery.value.toLowerCase())
+        )
+    }
+
+    // среда обитания
+    if (selectedLocation.value) {
+        result = result.filter(
+            item => item.dino_location === selectedLocation.value
+        )
+    }
+
+    // период
+    if (selectedPeriod.value) {
+        result = result.filter(
+            item => item.dino_peripd === selectedPeriod.value
+        )
+    }
+
+    // питание
+    if (selectedFood.value) {
+        result = result.filter(
+            item => item.dino_food === selectedFood.value
+        )
+    }
+
+    return result
+})
+
+const resetFilters = () => {
+    selectedLocation.value = ''
+    selectedPeriod.value = ''
+    selectedFood.value = ''
+}
 </script>
 <template>
     <div class="common-wrapper">
@@ -51,16 +95,17 @@ const isFilterOpened = ref(false)
                 <div class="card__wrapper">
                     <CardComp v-for="item in filteredDino" :id="item.id" :key="item.id" :title="item.dino_name"
                         :description="item.mini_description" :image="item.dino_card_img"
-                        :image2x="item.dino_card_img_2x" :dino-page-id="item.dino_page_id" :is-favorite="item.favorite_status"></CardComp>
+                        :image2x="item.dino_card_img_2x" :dino-page-id="item.dino_page_id"
+                        :is-favorite="item.favorite_status"></CardComp>
                 </div>
             </div>
         </section>
-        <Filters v-model:isOpen="isFilterOpened"></Filters>
+        <Filters v-model:isOpen="isFilterOpened" v-model:location="selectedLocation"
+            v-model:period="selectedPeriod" v-model:food="selectedFood" />
     </div>
 </template>
 
 <style scoped>
-
 .common-wrapper {
     position: relative;
 }
@@ -69,7 +114,7 @@ const isFilterOpened = ref(false)
     display: flex;
     gap: 60px;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .main-cards {
