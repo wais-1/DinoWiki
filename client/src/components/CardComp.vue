@@ -3,7 +3,6 @@ import { useAuthStore } from '@/stores/auth'
 import { ref, onMounted } from 'vue'
 import api from '@/api'
 const authStore = useAuthStore()
-import BrowsingHistory from '@/views/BrowsingHistory.vue'
 
 
 const props = defineProps({
