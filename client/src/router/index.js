@@ -12,7 +12,6 @@ import { useAuthStore } from '@/stores/auth'
 import updateCard from '@/views/updateCard.vue'
 import UpdatePage from '@/views/UpdatePage.vue'
 import FavoriteCards from '@/views/FavoriteCards.vue'
-import BrowsingHistory from '@/views/BrowsingHistory.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -28,7 +27,6 @@ const router = createRouter({
     { path: '/edit-card/:id', component: updateCard },
     { path: '/edit-page/:id', component: UpdatePage },
     { path: '/favoriteCards', component: FavoriteCards },
-    { path: '/browsingHistory', component: BrowsingHistory },
     { 
       path: '/admin', 
       component: Admin,
