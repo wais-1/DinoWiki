@@ -176,5 +176,38 @@ router.put(
   }
 )
 
+router.delete('/:id', async (req, res) => {
+  try {
+
+    await pool.query(
+      'DELETE FROM favorite WHERE dino_card_id = ?',
+      [req.params.id]
+    )
+
+    const [result] = await pool.query(
+      'DELETE FROM dino_card WHERE id = ?',
+      [req.params.id]
+    )
+
+    if (!result.affectedRows) {
+      return res.status(404).json({
+        error: 'Карточка не найдена'
+      })
+    }
+
+    res.json({
+      success: true,
+      message: 'Карточка удалена'
+    })
+
+  } catch (err) {
+    console.error(err)
+
+    res.status(500).json({
+      error: err.message
+    })
+  }
+})
+
 
 module.exports = router
