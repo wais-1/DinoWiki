@@ -81,6 +81,22 @@ onMounted(async () => {
     console.error(err)
   }
 })
+
+const deleteCard = async () => {
+    try {
+
+        if (!confirm('Удалить карточку?')) {
+            return
+        }
+
+        await api.delete(`/dinoCard/${props.id}`)
+
+        window.location.reload()
+
+    } catch (err) {
+        console.error(err)
+    }
+}
 </script>
 
 <template>
@@ -113,7 +129,7 @@ onMounted(async () => {
 
         </button>
         <div class="card-btns" v-if="authStore.isAdmin">
-            <button v-if="authStore.isAdmin" class="card-content__delete">Удалить</button>
+            <button v-if="authStore.isAdmin" class="card-content__delete" @click.stop="deleteCard">Удалить</button>
             <RouterLink :to="`/edit-card/${id}`" v-if="authStore.isAdmin" class="card-content__update">Обновить
             </RouterLink>
         </div>
